@@ -21,7 +21,7 @@ public partial class Form1 : Form
         };
     }
 
-    private async void btnStart_Click(object sender, EventArgs e)
+    private void btnStart_Click(object sender, EventArgs e)
     {
         if (_server.IsRunning)
             return;
