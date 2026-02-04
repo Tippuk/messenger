@@ -1,0 +1,51 @@
+Основные классы мессенджера для UML-диаграммы:
+
+- Message
+  - From : string
+  - To : string?
+  - Text : string
+  - Timestamp : DateTime
+  - Type : MessageType
+  - Users : List<string>
+
+- ChatServerInstance
+  - + StartAsync(ip : IPAddress, port : int) : Task
+  - + Stop() : void
+  - - _clients : List<ClientConnection>
+  - события:
+    - Log(message : string)
+    - MessageReceived(message : Message)
+    - UsersChanged(users : IReadOnlyList<string>)
+
+- ClientConnection
+  - + UserName : string
+  - + ReadLineAsync(token : CancellationToken) : Task<string?>
+  - + TrySendLine(line : string) : void
+  - реализует IDisposable
+
+- ChatClientConnection
+  - + UserName : string
+  - + IsConnected : bool
+  - + ConnectAsync(ip : string, port : int, userName : string) : Task
+  - + SendChatAsync(text : string, toUser : string?) : Task
+  - события:
+    - MessageReceived(message : Message)
+    - Disconnected()
+
+- Form1 (в проекте ChatClient)
+  - поля:
+    - _connection : ChatClientConnection
+    - _history : List<Message>
+  - отвечает за:
+    - элементы интерфейса (история, ввод, список пользователей)
+    - реакцию на события от ChatClientConnection
+
+Связи:
+
+- ChatServerInstance "1" --- "*" ClientConnection
+- ChatServerInstance использует Message (агрегация)
+- ChatClientConnection использует Message (агрегация)
+- Form1 агрегирует ChatClientConnection и список Message.
+
+Этих описаний достаточно, чтобы собрать UML-диаграмму классов в draw.io.
+
