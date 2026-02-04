@@ -1,0 +1,9 @@
+bin/
+obj/
+*.user
+*.log
+*.vs/
+*/bin/
+*/obj/
+chat-log.json
+
